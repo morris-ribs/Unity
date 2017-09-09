@@ -307,7 +307,7 @@ namespace dotBunny.Unity
                 DateTime targetDate = LastUpdate.AddDays(UpdateTime);
                 if (DateTime.Now >= targetDate && AutomaticUpdates)
                 {
-                    CheckForUpdate();
+                   // CheckForUpdate();
                 }
 
                 // Open VS Code automatically when project is loaded
