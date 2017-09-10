@@ -1,13 +1,18 @@
 ﻿using UnityEngine;
 
 public class Enemy : MonoBehaviour {
-	public int target = 0;
-	public Transform exitPoint;
-	public Transform[] wayPoints;
-	public float navigationUpdate;
+	 // this attribute makes the field innaccessible for other classes, 
+  //    but accessible from the Inspector
+  [SerializeField] 
+  private Transform exitPoint;
+	[SerializeField] 
+  private Transform[] wayPoints;
+	[SerializeField] 
+  private float navigationUpdate;
 
 	private Transform enemy;
 	private float navigationTime = 0;
+	private int target = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -39,7 +44,7 @@ public class Enemy : MonoBehaviour {
     if (other.tag.ToLower() == "checkpoint") {
       target++;
     } else if (other.tag.ToLower() == "finish") {
-      GameManager.instance.removeEnemyFromScreen();
+      GameManager.Instance.removeEnemyFromScreen();
       Destroy(gameObject);
     }
   }

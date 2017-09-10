@@ -2,25 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
-  public static GameManager instance = null;
-  public GameObject spawnPoint;
-  public GameObject[] enemies;
-  public int maxEnemiesOnScreen;
-  public int totalEnemies;
-  public int enemiesPerSpawn;
+public class GameManager : Singleton<GameManager> {
+  // this attribute makes the field innaccessible for other classes, 
+  //    but accessible from the Inspector
+  [SerializeField] 
+  private GameObject spawnPoint;
+  [SerializeField]
+  private GameObject[] enemies;
+  [SerializeField]
+  private int maxEnemiesOnScreen;
+  [SerializeField]
+  private int totalEnemies;
+  [SerializeField]
+  private int enemiesPerSpawn;
   private int enemiesOnScreen = 0;
   const float spawnDelay = 0.5f;
-
-  void Awake() {
-    if(instance == null) {
-      instance = this;
-    }
-    else if (instance != this) {
-      Destroy(gameObject);
-    }
-    DontDestroyOnLoad(gameObject);
-  }
 
 	// Use this for initialization
 	void Start () {
