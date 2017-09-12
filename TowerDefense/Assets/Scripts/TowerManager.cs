@@ -3,11 +3,12 @@ using UnityEngine.EventSystems;
 
 public class TowerManager : Singleton<TowerManager> {
 
-  private TowerBtn towerBtnPressed; 
+  private TowerBtn towerBtnPressed;
+	private SpriteRenderer spriteRenderer;
 
 	// Use this for initialization
 	void Start () {
-		
+		spriteRenderer = GetComponent<SpriteRenderer>(); // look for a SpriteRenderer inside our TowerManager
 	}
 	
 	// Update is called once per frame
@@ -16,7 +17,13 @@ public class TowerManager : Singleton<TowerManager> {
 			Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			// Vector2.zero gets exactly the point from where we are hitting the button on
 			RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
-			placeTower(hit);
+			if (hit.collider.tag == "BuildSite") {
+				hit.collider.tag = "buildSiteFull";
+				placeTower(hit);
+			}			
+		}
+		if (spriteRenderer.enabled) {
+			followMouse();
 		}
 	}
 
@@ -24,11 +31,26 @@ public class TowerManager : Singleton<TowerManager> {
 		if (!EventSystem.current.IsPointerOverGameObject() && towerBtnPressed != null) {
 			GameObject newTower = Instantiate(towerBtnPressed.TowerObject);
 			newTower.transform.position = hit.transform.position;
+			disableDragSprite();
 		}
 	}
 
   public void selectTower(TowerBtn towerSelected) {
     towerBtnPressed = towerSelected;
-		// Debug.Log("Button pressed: " + towerBtnPressed.TowerObject);
+		enableDragSprite(towerBtnPressed.DragSprite);
   }
+
+	public void followMouse() {
+		transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		transform.position = new Vector2(transform.position.x, transform.position.y);
+	}
+
+	public void enableDragSprite(Sprite sprite) {
+		spriteRenderer.enabled = true;
+		spriteRenderer.sprite = sprite;
+	}
+
+	public void disableDragSprite() {
+		spriteRenderer.enabled = false;
+	}
 }

@@ -9,4 +9,9 @@ public class TowerBtn : MonoBehaviour {
     } 
     private set { } 
   }
+
+  [SerializeField]
+  private Sprite dragSprite;
+
+  public Sprite DragSprite { get { return dragSprite; } private set { }  }
 }
