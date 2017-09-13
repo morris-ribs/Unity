@@ -21,9 +21,10 @@ GameObject:
   - component: {fileID: 4252568435044348}
   - component: {fileID: 212028183507770126}
   - component: {fileID: 58163104991879010}
-  m_Layer: 0
+  - component: {fileID: 114379290900373964}
+  m_Layer: 8
   m_Name: rock
-  m_TagString: Untagged
+  m_TagString: projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56,6 +57,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.12
+--- !u!114 &114379290900373964
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1413858974461358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae607d2e82a0bad4d8a715f869b74f4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackStrength: 50
+  projectileType: 0
 --- !u!212 &212028183507770126
 SpriteRenderer:
   m_ObjectHideFlags: 1
