@@ -129,6 +129,7 @@ MonoBehaviour:
   - {fileID: 4951465441940842, guid: b4d3f21359f346046b8b020cbffcc888, type: 2}
   - {fileID: 4361103681500578, guid: b4d3f21359f346046b8b020cbffcc888, type: 2}
   navigationUpdate: 0.01
+  healthPoints: 300
 --- !u!212 &212477866676193614
 SpriteRenderer:
   m_ObjectHideFlags: 1
