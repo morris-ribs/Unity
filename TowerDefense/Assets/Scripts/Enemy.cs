@@ -12,6 +12,9 @@ public class Enemy : MonoBehaviour {
   [SerializeField]
   private int healthPoints;
 
+  [SerializeField]
+  private int rewardAmt;
+
 	private Transform enemy;
   private Collider2D enemyCollider;
   private Animator anim;
@@ -52,11 +55,19 @@ public class Enemy : MonoBehaviour {
   {
     switch (other.tag.ToLower()) {
       case "checkpoint": target++; break;
-      case "finish": GameManager.Instance.UnregisterEnemy(this); break;
+      case "finish": {
+        GameManager.Instance.RoundEscaped++;
+        GameManager.Instance.TotalEscaped++;
+        GameManager.Instance.UnregisterEnemy(this);
+        GameManager.Instance.isWaveOver();
+      } 
+      break;
       case "projectile": {
           Projectile newP = other.gameObject.GetComponent<Projectile>();
-          enemyHit(newP.AttackStrength);
-          Destroy(other.gameObject); 
+          if(newP != null && other != null) {
+            enemyHit(newP.AttackStrength);
+            Destroy(other.gameObject); 
+          }
         } 
         break;
       default: return;
@@ -64,6 +75,7 @@ public class Enemy : MonoBehaviour {
   }
 
   public void enemyHit(int hitPoints) {
+    GameManager.Instance.AudioSource.PlayOneShot(SoundManager.Instance.Hit);
     int points = healthPoints - hitPoints;
     if (points > 0) {
       // enemy is hurt
@@ -72,6 +84,7 @@ public class Enemy : MonoBehaviour {
       anim.Play("Hurt");
     }
     else { 
+      GameManager.Instance.AudioSource.PlayOneShot(SoundManager.Instance.Death);
       // die animation here
       anim.SetTrigger("didDie");
       // enemy should die
@@ -82,5 +95,8 @@ public class Enemy : MonoBehaviour {
   public void die() {
     isDead = true;
     enemyCollider.enabled = false;
+    GameManager.Instance.TotalKilled++;
+    GameManager.Instance.addMoney(rewardAmt);
+    GameManager.Instance.isWaveOver();
   }
 }
